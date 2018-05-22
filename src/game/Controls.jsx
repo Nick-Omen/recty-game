@@ -89,6 +89,14 @@ export default class Controls extends React.Component {
 
   render() {
 
+    if ('ontouchstart' in document.documentElement) {
+      return (
+        <div className="text-center">
+          Swipe in direction.
+        </div>
+      );
+    }
+
     return (
       <div className="text-center">
         Use arrows to control the rectangle.

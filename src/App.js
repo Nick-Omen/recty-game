@@ -36,7 +36,7 @@ class App extends React.Component {
     gameOver: false,
     snake: [[BOARD_WIDTH / 2, BOARD_HEIGHT / 2]],
     obstacles: [],
-    score: 0
+    score: -1
   };
 
   interval = null;
@@ -164,11 +164,13 @@ class App extends React.Component {
         <h2 className="subtitle">The Game</h2>
         <Board width={BOARD_WIDTH}
                height={BOARD_HEIGHT}>
-          <span className="score">
-            Score:
-            <br />
-            <span className="score-number">{this.state.score}</span>
-          </span>
+          {this.state.direction !== null ? (
+            <span className="score">
+              Score:
+              <br />
+              <span className="score-number">{this.state.score}</span>
+            </span>
+          ) : null}
           <Snake data={this.state.snake} size={SNAKE_SIZE} />
           <Obstacles data={this.state.obstacles} size={SNAKE_SIZE} />
         </Board>

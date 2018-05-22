@@ -40,16 +40,25 @@ body {
 
 .obstacle-unit,
 .snake-unit {
-  background: white;
+  background: red;
   position: absolute;
 }
 
 .obstacle-unit {
   background: black;
+  border-radius: 50%;
 }
 
 .title {
   margin: 0 0 10px;
+}
+
+.subtitle {
+  margin: 0 0 30px;
+}
+
+.text-center {
+  text-align: center;
 }
 
 .score {
@@ -66,10 +75,22 @@ body {
   font-weight: bold;
 }
 
-.subtitle {
-  margin: 0 0 30px;
-}
+@media all and (max-width: 600px) {
+  .title {
+    font-size: 1.75em;
+  }
 
-.text-center {
-  text-align: center;
+  .subtitle {
+    font-size: 1.25em;
+  }
+
+  .score {
+    top: 100%;
+    left: 0;
+    padding-left: 0;
+  }
+
+  .board {
+    margin-bottom: 40px;
+  }
 }
