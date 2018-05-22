@@ -1,0 +1,48 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  height: 100%;
+  overflow: hidden;
+}
+
+.container,
+#root {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 100%;
+}
+
+.container {
+  justify-content: center;
+  align-items: center;
+}
+
+.board {
+  box-shadow: 0 0 0 5px black;
+  background: darkgray;
+  margin-bottom: 15px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.board-message {
+  color: white;
+  display: inline-block;
+  padding: 0 10px;
+}
+
+.obstacle-unit,
+.snake-unit {
+  background: red;
+  position: absolute;
+}
+
+.obstacle-unit {
+  background: black;
+}
