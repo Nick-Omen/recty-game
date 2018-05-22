@@ -160,7 +160,7 @@ class App extends React.Component {
 
     return (
       <div className="container">
-        <h1 className="title">Beware of Black</h1>
+        <h1 className="title">Evade, Recty, Evade</h1>
         <h2 className="subtitle">The Game</h2>
         <Board width={BOARD_WIDTH}
                height={BOARD_HEIGHT}>
