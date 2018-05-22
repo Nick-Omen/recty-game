@@ -8,7 +8,12 @@ export default class Controls extends React.Component {
 
   constructor(props) {
     super(props);
-    document.addEventListener('keydown', this.onKeyDown.bind(this), false);
+    this.onKeyDown = this.onKeyDown.bind(this);
+    document.addEventListener('keydown', this.onKeyDown);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.onKeyDown);
   }
 
   onKeyDown(e) {
@@ -24,14 +29,14 @@ export default class Controls extends React.Component {
       case 40:
         return this.props.onChangeDirection('bottom');
       default:
-        return this.props.onChangeDirection('start');
+        return this.props.onChangeDirection('another');
     }
   }
 
   render() {
 
     return (
-      <div>
+      <div className="text-center">
         Use arrows to control the rectangle.
       </div>
     );
