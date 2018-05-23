@@ -214,8 +214,8 @@ class App extends React.Component {
               Press any game control key to start.
             </span>
           )}
-          <Snake data={this.state.snake} size={SNAKE_SIZE} />
-          <Obstacles data={this.state.obstacles} size={SNAKE_SIZE} />
+          <Snake data={this.state.snake} size={SNAKE_SIZE} width={BOARD_WIDTH} height={BOARD_HEIGHT} />
+          <Obstacles data={this.state.obstacles} size={SNAKE_SIZE} width={BOARD_WIDTH} height={BOARD_HEIGHT} />
         </Board>
         <Controls onChangeDirection={this.onChangeDirection.bind(this)} />
       </div>
