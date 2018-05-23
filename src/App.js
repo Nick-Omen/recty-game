@@ -7,15 +7,26 @@ import Obstacles from './game/Obstacles';
 const BOARD_WIDTH = 240;
 const BOARD_HEIGHT = 360;
 const SNAKE_SIZE = 10;
+const SNAKE_HALF_SIZE = 5;
 const GAME_SPEED = 100;
+const LEVEL_SCORE_COUNT = 25;
+
+// const getPossibilitiesObject = range => Array.from(new Array(range / SNAKE_HALF_SIZE - 1))
+//   .reduce((o, v, i) => {
+//     o[(i + 1) * 5] = 0;
+//     return o;
+//   }, {});
+// const xPossibilities = getPossibilitiesObject(BOARD_WIDTH);
+// const yPossibilities = getPossibilitiesObject(BOARD_HEIGHT);
 
 const getRandomArbitrary = (min, max) => {
   return Math.floor(Math.random() * (max - min) + min);
 };
 
-const generateObstacle = function (direction) {
-  const xRand = getRandomArbitrary(10, BOARD_WIDTH / 5 - 1) * 5;
-  const yRand = getRandomArbitrary(10, BOARD_WIDTH / 5 - 1) * 5;
+const getObstacle = function (direction) {
+  const xRand = getRandomArbitrary(0, BOARD_WIDTH / SNAKE_HALF_SIZE - 1) * SNAKE_HALF_SIZE;
+  const yRand = getRandomArbitrary(0, BOARD_HEIGHT / SNAKE_HALF_SIZE - 1) * SNAKE_HALF_SIZE;
+
   switch (direction) {
     case 'right':
       return [SNAKE_SIZE / 2, yRand, 'right'];
@@ -30,12 +41,30 @@ const generateObstacle = function (direction) {
   }
 };
 
+const directionMapping = {
+  right: 'bottom',
+  bottom: 'left',
+  left: 'top',
+  top: 'right'
+};
+
+const generateObstacles = function (direction, count) {
+  const obstacles = [];
+
+  for (let i = 0; i < count; i++) {
+    obstacles.push(getObstacle(direction));
+    direction = directionMapping[direction];
+  }
+  return obstacles;
+};
+
 class App extends React.Component {
   initialState = {
     direction: null,
     gameOver: false,
     snake: [[BOARD_WIDTH / 2, BOARD_HEIGHT / 2]],
     obstacles: [],
+    level: 0,
     score: -1
   };
 
@@ -43,16 +72,21 @@ class App extends React.Component {
   state = Object.assign({}, this.initialState);
 
   onChangeDirection(direction) {
-    if (direction === 'another') {
+    if (direction === 'another' || direction === this.state.direction) {
       return false;
     }
 
-    const obstacle = generateObstacle(direction);
+    const obstacles = generateObstacles(direction, this.state.level + 1);
+
+    console.log(obstacles);
+
+    const level = Math.round(this.state.score / LEVEL_SCORE_COUNT);
 
     this.setState({
       direction: direction,
       score: this.state.score + 1,
-      obstacles: [...this.state.obstacles, obstacle]
+      level: level,
+      obstacles: [...this.state.obstacles, ...obstacles]
     });
   }
 
@@ -165,10 +199,17 @@ class App extends React.Component {
         <Board width={BOARD_WIDTH}
                height={BOARD_HEIGHT}>
           {this.state.direction !== null ? (
-            <span className="score">
-              Score:
-              <br />
-              <span className="score-number">{this.state.score}</span>
+            <span>
+              <span className="score">
+                Score:
+                <br />
+                <span className="score-number">{this.state.score}</span>
+              </span>
+              <span className="score level">
+                Level:
+                <br />
+                <span className="score-number">{this.state.level}</span>
+              </span>
             </span>
           ) : null}
           <Snake data={this.state.snake} size={SNAKE_SIZE} />
