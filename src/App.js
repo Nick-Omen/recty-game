@@ -72,13 +72,11 @@ class App extends React.Component {
   state = Object.assign({}, this.initialState);
 
   onChangeDirection(direction) {
-    if (direction === 'another' || direction === this.state.direction) {
+    if (!direction || direction === this.state.direction) {
       return false;
     }
 
     const obstacles = generateObstacles(direction, this.state.level + 1);
-
-    console.log(obstacles);
 
     const level = Math.round(this.state.score / LEVEL_SCORE_COUNT);
 
@@ -211,7 +209,11 @@ class App extends React.Component {
                 <span className="score-number">{this.state.level}</span>
               </span>
             </span>
-          ) : null}
+          ) : (
+            <span className="game-pause">
+              Press any game control key to start.
+            </span>
+          )}
           <Snake data={this.state.snake} size={SNAKE_SIZE} />
           <Obstacles data={this.state.obstacles} size={SNAKE_SIZE} />
         </Board>
